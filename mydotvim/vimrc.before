@@ -1,0 +1,59 @@
+" map 'jj' to exit from insert mode
+imap fd <Esc>
+
+" remap ctrl-z to nothing.
+map <C-z> <Nop>
+
+" Space is your leader
+let mapleader = "\<Space>"
+
+
+
+" Default mapping
+let g:multi_cursor_use_default_mapping=0
+
+let g:multi_cursor_start_key='<Leader>nn'
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+" Emmet
+let g:user_emmet_expandbar_key='<C-y>'
+"let g:user_emmet_install_global=0
+"autocmd FileType html,erb,css,sassescss,less,js,coffee EmmetInstall
+
+" search
+nnoremap <leader>ag :Ag<Space>
+
+"Syntastic rubocop
+" let g:syntastic_ruby_checkers=['rubocop', 'mri']
+
+"Syntastic Go
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
+"Vim-Go
+let g:go_fmt_command = "goimports"
+
+" Copy-paste
+vmap <C-c> "+yi
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <C-r><C-o>+
+
+set guioptions-=m
+set guioptions-=t
+set guioptions-=T
+set guioptions-=r
+set guioptions-=L
+
+if has('gui_running')
+  set guifont=Monospace\ 12
+endif
+
+" set coordinates for sunset
+let g:sunset_latitude = 49.8326046
+let g:sunset_longitude = 23.8721529
+
+let g:syntastic_auto_loc_list = 3

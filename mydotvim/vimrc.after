@@ -1,0 +1,53 @@
+" configure colors & colorscheme
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
+
+:function SetDarkBg()
+:  let g:indent_guides_auto_colors = 0
+:  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=0
+:  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=0
+:  set background=dark
+:endfunction
+
+:command Dark call SetDarkBg()
+
+:function SetLightBg()
+:  let g:indent_guides_auto_colors = 0
+:  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=7
+:  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=7
+:  set background=light
+:  source ~/.vimrc
+:endfunction
+
+:command Light call SetLightBg()
+
+colorscheme solarized
+source ~/.vimbackground
+
+" enable autoreload file on change outside
+set autoread
+
+" do not respond to mouse clicks
+
+filetype plugin on
+
+
+set listchars=tab:⋅⋅,trail:·
+
+map tg gT
+
+" Screen settings
+let g:ScreenImpl = 'Tmux'
+let g:ScreenShellTmuxInitArgs = '-2'
+let g:ScreenShellInitialFocus = 'shell'
+let g:ScreenShellQuitOnVimExit = 0
+map <F5> :ScreenShellVertical<CR>
+command! -nargs=? -complete=shellcmd W  :w | :call ScreenShellSend("load '".@%."';")
+map <Leader>it :call ScreenShellSend("RSpecConsole.run '".@% . ':' . line('.') . "'")<CR>
+" map <Leader>sc :call ScreenShellSend("CucumberConsole.run '--format=pretty', '".@% . ':' . line('.') . "'")<CR>
+
+set mouse=c
