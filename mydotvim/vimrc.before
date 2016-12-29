@@ -61,4 +61,5 @@ let g:syntastic_auto_loc_list = 3
 " tabs/spaces config
 autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype gitcommit setlocal spell textwidth=72
 
