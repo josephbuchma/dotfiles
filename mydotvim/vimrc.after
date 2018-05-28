@@ -1,3 +1,6 @@
+
+so $HOME/.vimrc.private
+
 " configure colors & colorscheme
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -33,7 +36,29 @@ set autoread
 
 " do not respond to mouse clicks
 
-filetype plugin on
+"filetype plugin on
+
+filetype plugin indent on
+
+set cmdheight=2
+set completeopt+=menuone
+set completeopt-=preview
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:echodoc_enable_at_startup = 1
+
+" golang fix
+let g:neocomplete#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*'
+
+
+
+
 
 
 set listchars=tab:⋅⋅,trail:·
@@ -51,3 +76,5 @@ map <Leader>it :call ScreenShellSend("RSpecConsole.run '".@% . ':' . line('.') .
 " map <Leader>sc :call ScreenShellSend("CucumberConsole.run '--format=pretty', '".@% . ':' . line('.') . "'")<CR>
 
 set mouse=c
+
+let g:gh_open_command = 'xdg-open '

@@ -1,8 +1,12 @@
+
+
 " map 'jj' to exit from insert mode
 imap fd <Esc>
 
 " remap ctrl-z to nothing.
 map <C-z> <Nop>
+
+nmap ff :CtrlPBuffer<CR>
 
 " Space is your leader
 let mapleader = "\<Space>"
@@ -33,12 +37,57 @@ nnoremap <leader>ag :Ag<Space>
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
+" syntasic javascript
+let g:syntastic_javascript_checkers=['eslint']
+
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
 "Vim-Go
 let g:go_fmt_command = "goimports"
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>dh <Plug>(go-def-stack)
+au FileType go nmap <Leader>gu <Plug>(go-def-pop)
+"au FileType go nmap <C-e> <Plug>(go-def-pop)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+"let g:go_auto_sameids = 1
+
+"Use locally installed flow
+let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+if matchstr(local_flow, "^\/\\w") == ''
+    let local_flow= getcwd() . "/" . local_flow
+endif
+if executable(local_flow)
+  let g:flow#flowpath = local_flow
+endif
+
+let g:flow#enable = 1
+let g:flow#autoclose = 1
+let g:flow#timeout = 10
+
+let g:javascript_plugin_flow = 1
 
 " Copy-paste
-vmap <C-c> "+yi
-vmap <C-x> "+c
+vmap <C-c> "+yi<ESC>
+vmap <C-x> "+c<ESC>
 vmap <C-v> c<ESC>"+p
 imap <C-v> <C-r><C-o>+
 
@@ -61,5 +110,24 @@ let g:syntastic_auto_loc_list = 3
 " tabs/spaces config
 autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-autocmd Filetype gitcommit setlocal spell textwidth=72
+" autocmd Filetype gitcommit setlocal spell textwidth=72
 
+" Disable out-of-bounds freezing
+set noeb vb t_vb=
+
+" Autocomplete ignore files
+set wildignore+=*.pdf,*.o,*.obj,*.jpg,*.png,*.mmdb,*vendor/*
+
+"autocmd bufwritepost *.js silent !standard --fix %
+"set autoread
+
+let g:ale_fix_on_save = 1
+" Write this in your vimrc file
+let g:ale_lint_on_text_changed = 'never'
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
+
+let g:ale_fixers = {
+\  'javascript': ['standard'],
+\}
