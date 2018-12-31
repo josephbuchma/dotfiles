@@ -15,6 +15,7 @@ show_help() {
   echo "    install.sh [-h|--help] \\"
   echo "               (-s <scheme>|--scheme <scheme>|--scheme=<scheme>) \\"
   echo "               (-p <profile>|--profile <profile>|--profile=<profile>)"
+  echo "               [OPTION]..."
   echo
   echo "Options"
   echo
@@ -24,8 +25,11 @@ show_help() {
   echo "        Color scheme to be used"
   echo "    -p, --profile"
   echo "        Gnome Terminal profile to overwrite"
+  echo "    --install-dircolors, --skip-dircolors"
+  echo "        Do or skip the dircolors installation in a non interactive mode"
   echo
 }
+
 
 validate_scheme() {
   local profile=$1
@@ -33,7 +37,11 @@ validate_scheme() {
 }
 
 set_profile_colors() {
-  local profile=$1
+  if [ "$newGnome" = "1" ]
+    then local profile=:$1
+  else
+    local profile=$1
+  fi
   local scheme=$2
   local scheme_dir=$dir/colors/$scheme
 
@@ -123,7 +131,7 @@ interactive_confirm() {
   echo -n "(YES to continue) "
 
   read confirmation
-  if [[ $(echo $confirmation | tr '[:lower:]' '[:upper:]') != YES ]]
+  if [[ ${confirmation^^} != YES ]]
   then
     die "ERROR: Confirmation failed -- ABORTING!"
   fi
@@ -152,22 +160,28 @@ do
       profile=$2
       shift
     ;;
+    --install-dircolors )
+      install_dircolors=true
+    ;;
+    --skip-dircolors )
+      install_dircolors=false
+    ;;
   esac
   shift
 done
 
-if [[ -z "$scheme" ]] || [[ -z "$profile" ]]
+if [[ -z $scheme ]] || [[ -z $profile ]]
 then
   interactive_help
 fi
 
-if [[ -n "$scheme" ]]
+if [[ -n $scheme ]]
   then validate_scheme $scheme
 else
   interactive_select_scheme "${schemes[@]}"
 fi
 
-if [[ -n "$profile" ]]
+if [[ -n $profile ]]
   then if [ "$newGnome" = "1" ]
     then profile="$(get_uuid "$profile")"
   fi
@@ -181,4 +195,11 @@ else
 fi
 
 set_profile_colors $profile $scheme
-check_dircolors || warning_message_dircolors
+
+if [[ -n $install_dircolors ]]
+    then if "$install_dircolors"
+        then copy_dircolors
+    fi
+else
+    check_dircolors || warning_message_dircolors
+fi

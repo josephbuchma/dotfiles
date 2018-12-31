@@ -43,7 +43,14 @@ Then clone the repository and you can run the installation script:
 And just follow the instructions.
 
 You can also run the `set_dark.sh` or `set_light.sh` script, to directly set
-the dark or light solarized theme to the actived gnome-terminal profile.
+the dark or light solarized theme to the actived gnome-terminal profile. The
+options `--install-dircolors` or `--skip-dircolors` can also be used to install
+or not the solarized dircolors in a non-interactive mode.
+
+To run this script remotely or via cron (or from any shell where
+`DBUS_SESSION_BUS_ADDRESS` is not set), you need to start a dbus connection:
+
+    $ dbus-launch ./install.sh
 
 Uninstall
 ---------
@@ -78,6 +85,26 @@ files:
 
 No additional configuration is needed to add a theme, the installation script
 just list at launch the children folders in the `colors` dir.
+
+Dircolors
+---------
+
+The installation script will ask if a solarized dircolors is wanted. It will be
+downloaded and installed as `~/.dir_colors/dircolors`. On CentOS, it can be an
+issue (see issue #62), as the default setup use `~/.dir_colors` as dircolors.
+In that case, you should manually move `~/.dir_colors` as
+`~/.dir_colors/dircolors` before starting the installation script.
+
+If the dircolors is not applied, please check that your shell actually source
+your dircolors:
+```
+if [ -f ~/.dir_colors/dircolors ]
+    then eval `dircolors ~/.dir_colors/dircolors`
+fi
+```
+
+This should not be necessary on major distributions (such as Ubuntu, Fedora,
+etc.) but could be on ArchLinux, Gentoo and others.
 
 Contributors
 ------------
