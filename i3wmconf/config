@@ -167,4 +167,5 @@ bindsym $mod+m exec gnome-terminal -e '/home/joseph/go/bin/actlog'
 
 # configure keyboard layout switch
 exec "setxkbmap -layout us,ua,ru"
-exec "setxkbmap -option grp:lwin_toggle,ctrl:swapcaps"
+exec "setxkbmap -option grp:caps_toggle,ctrl:swapcaps"
+exec "setxkbmap us"

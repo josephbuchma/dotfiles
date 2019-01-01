@@ -1,0 +1,10 @@
+{
+    "window.zoomLevel": 2,
+    "vim.insertModeKeyBindings": [
+        {
+        "before": ["f", "d"],
+        "after": ["<Esc>"]
+        }
+    ],
+    "vim.useSystemClipboard": true
+}

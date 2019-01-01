@@ -6,4 +6,4 @@ deps:
 	git clone https://github.com/sigurdga/gnome-terminal-colors-solarized
 
 install:
-	echo 'TODO'
+	
