@@ -1,0 +1,3 @@
+idd="Elan Touchpad"
+xinput --set-prop $idd "libinput Tapping Enabled" 1
+xinput --set-prop $idd "libinput Natural Scrolling Enabled" 1
