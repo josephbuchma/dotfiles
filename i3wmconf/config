@@ -152,20 +152,14 @@ bar {
         status_command i3status
 }
 
-# Configure key delay/repeat
-exec --no-startup-id xset r rate 210 65 # Set initial delay 300ms, repeat 35ms
-
 bindsym $mod+F5 exec light -U 5
 bindsym $mod+F6 exec light -A 5
 
 bindsym $mod+F2 exec amixer -D pulse sset Master 5%+
 bindsym $mod+F1 exec amixer -D pulse sset Master 5%-
+bindsym $mod+F10 exec amixer -D pulse sset Master toggle
 
 bindsym $mod+F7 exec scrot -e 'mv $f ~/Pictures/screenshots/$f'
 
 bindsym $mod+m exec gnome-terminal -e '/home/joseph/go/bin/actlog'
 
-# configure keyboard layout switch
-exec "setxkbmap -layout us,ua,ru"
-exec "setxkbmap -option grp:caps_toggle,ctrl:swapcaps"
-exec "setxkbmap us"

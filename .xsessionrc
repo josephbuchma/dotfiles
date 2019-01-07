@@ -1,3 +1,12 @@
 idd="Elan Touchpad"
 xinput --set-prop $idd "libinput Tapping Enabled" 1
 xinput --set-prop $idd "libinput Natural Scrolling Enabled" 1
+
+# configure keyboard layout switch
+setxkbmap -layout us,ua,ru
+setxkbmap -option grp:caps_toggle,ctrl:swapcaps
+setxkbmap us"
+
+cat ~/.xsessionrc | /usr/bin/sh
+# Configure key delay/repeat
+xset r rate 210 65 # Set initial delay 300ms, repeat 35ms
